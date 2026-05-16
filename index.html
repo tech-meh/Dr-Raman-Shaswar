@@ -3,44 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دکتۆر ڕامان شاسوار - بەدواداچوونی نەخۆش</title>
+    <title>پەڕەی نەخۆش - عیادەی دکتۆر ڕامان شاسوار</title>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
-        :root{--primary:#004060;--accent:#0076a3;--bg:#ebf2f7;--text:#2c3e50}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);color:var(--text);padding:15px;text-align:right;direction:rtl}.card{max-width:480px;margin:20px auto;background:white;padding:25px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,0.08);text-align:center}.logo-area img{width:90px;height:90px;margin-bottom:10px;object-fit:contain}.clinic-title{font-size:20px;color:var(--primary);font-weight:bold;margin-bottom:2px}.clinic-sub{font-size:13px;color:#666;margin-bottom:20px}h3{color:var(--primary);font-size:16px;margin-bottom:15px}.search-box{display:flex;gap:8px;margin-bottom:20px}input{flex:1;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:14px;text-align:center;font-weight:bold;box-shadow:inset 0 1px 3px rgba(0,0,0,0.05)}input:focus{border-color:var(--accent);outline:none}.btn{background:var(--primary);color:white;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px;transition:all 0.2s}.btn:hover{background:var(--accent)}.result-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:15px;margin-top:20px;text-align:right}.hidden{display:none!important}.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf2f7;font-size:14px}.info-row:last-child{border-bottom:none}.info-label{font-weight:bold;color:#4a5568}.info-val{color:#1a202c;font-weight:600}.notes-box{background:#fff8e1;border-right:4px solid #ffb300;padding:10px;border-radius:4px;margin-top:10px;font-size:13px;color:#b78103;line-height:1.5}.footer-credit{margin-top:30px;font-size:11px;color:#a0aec0}
+        :root{--primary:#004060;--accent:#2e7d32;--bg:#ebf2f7}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);padding:10px;text-align:right;direction:rtl}.box{max-width:550px;margin:10px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}h3{text-align:center;color:var(--primary);font-size:16px;margin-bottom:5px}p.sub-t{text-align:center;font-size:12px;color:#666;margin-bottom:15px}.search-section{display:flex;gap:8px;background:#fffde7;padding:10px;border:1px dashed #fbc02d;border-radius:8px;margin-bottom:15px;align-items:center}input[type="text"]{flex:1;padding:10px;border:1px solid #ccc;border-radius:6px;text-align:center;font-weight:bold;font-size:14px}.btn-search{background:var(--accent);color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px}.sec-title{font-size:13px;font-weight:bold;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:3px;margin:15px 0 8px 0;display:flex;align-items:center;gap:5px}.form-group{margin-bottom:8px}label{display:block;font-size:12px;font-weight:bold;margin-bottom:3px;color:#334155}.row{display:flex;gap:10px}.row .form-group{flex:1}.val-box{background:#f8fafc;border:1px solid #e2e8f0;padding:8px;border-radius:6px;font-size:13px;min-height:36px;display:flex;align-items:center}table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}th,td{padding:8px;border:1px solid #e2e8f0;text-align:center}th{background:#f1f5f9;color:#334155;font-weight:bold}.text-red{color:#d32f2f;font-weight:bold}.text-green{color:#2e7d32;font-weight:bold}.footer-text{text-align:center;font-size:10px;color:#94a3b8;margin-top:20px}.hidden{display:none!important}
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="logo-area">
-            <img src="https://tech-meh.github.io/Dr-Raman-Shaswar/logo.jpg" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3467/3467782.png'">
-            <div class="clinic-title">عيادة باوايي</div>
-            <div class="clinic-sub">لاشعة الاسنان والوجه والفكين</div>
+    <div class="box">
+        <h3>بەخێربێن بۆ نۆرینگەی دکتۆر ڕامان شاسوار</h3>
+        <p class="sub-t">تکایه کۆدەکەت بنووسه / يرجى كتابة الکود الخاص بك</p>
+        <div class="search-section">
+            <button class="btn-search" onclick="checkStatus()">بینین</button>
+            <input type="text" id="p-code" placeholder="BW-1045">
         </div>
-        <hr style="border:0;border-top:1px solid #e2e8f0;margin-bottom:20px;">
-        <h3>بۆ زانینی زانیارییەکانت، کۆدەکەت بنووسە</h3>
-        <div class="search-box">
-            <input type="text" id="p-code" placeholder="کۆدی نەخۆش (بۆ نموونە: BW-1234)">
-            <button class="btn" onclick="checkStatus()">لێدان</button>
-        </div>
-        <div id="result" class="result-card hidden">
-            <div class="info-row"><span class="info-label">ناوی نەخۆش:</span><span class="info-val" id="r-name"></span></div>
-            <div class="info-row"><span class="info-label">موعیدی داهاتوو:</span><span class="info-val" id="r-date" style="color:#e53e3e;"></span></div>
-            <div class="info-row"><span class="info-label">قەبارەی تەل U:</span><span class="info-val" id="r-u"></span></div>
-            <div class="info-row"><span class="info-label">قەبارەی تەل L:</span><span class="info-val" id="r-l"></span></div>
-            <div class="info-row"><span class="info-label">کۆی گشتی پارە:</span><span class="info-val" id="r-total"></span></div>
-            <div class="info-row"><span class="info-label">پارەی ماوە:</span><span class="info-val" id="r-rem" style="color:#e53e3e;"></span></div>
-            <div id="r-notes-area" class="hidden">
-                <div style="font-weight:bold;font-size:13px;margin-top:10px;color:#4a5568;">تێبینی دکتۆر:</div>
-                <div class="notes-box" id="r-notes"></div>
+        <div id="patient-data" class="hidden">
+            <div class="sec-title">👤 زانیارییە کەسییەکان</div>
+            <div class="form-group"><label>ناوی نەخۆش:</label><div class="val-box" id="r-name" style="font-weight:bold;"></div></div>
+            <div class="sec-title">💰 دۆخی دارایی</div>
+            <div class="row">
+                <div class="form-group"><label class="text-red">کۆی گشتی پارە:</label><div class="val-box text-red" id="r-total"></div></div>
+                <div class="form-group"><label class="text-green">تێکڕای پارەی ماوە:</label><div class="val-box text-green" id="r-rem"></div></div>
             </div>
+            <div class="sec-title">📅 موعید و ڕێنماییەکان</div>
+            <div class="form-group"><label>موعیدی داهاتوو:</label><div class="val-box" id="r-date" style="color:#0284c7;font-weight:bold;"></div></div>
+            <div class="form-group"><label>ڕێنمایی پزیشک بۆ تۆ:</label><div class="val-box" id="r-notes" style="white-space:pre-wrap;line-height:1.4;"></div></div>
+            <div class="sec-title">📊 مێژووی قستە دراوەکان</div>
+            <table>
+                <thead><tr><th style="width:10%">#</th><th style="width:45%">ڕێککەوت</th><th style="width:45%">بڕی قست</th></tr></thead>
+                <tbody id="history-table-body"></tbody>
+            </table>
         </div>
-        <div class="footer-credit">Mohammed Ezzadin</div>
+        <div class="footer-text">Developed by: Mohammed Ezzadin</div>
     </div>
+
     <script>
         const firebaseConfig={apiKey:"AIzaSyDKNKQamBU8f0w8sBx6CdtPV73BoHb_2Tg",authDomain:"dr-raman.firebaseapp.com",projectId:"dr-raman",storageBucket:"dr-raman.firebasestorage.app",messagingSenderId:"853069919127",appId:"1:853069919127:web:2634aadee0b44c16678ad2",databaseURL:"https://dr-raman-default-rtdb.firebaseio.com"};
         firebase.initializeApp(firebaseConfig);const db=firebase.database();
-        function checkStatus(){let c=document.getElementById('p-code').value.trim().toUpperCase();if(!c)return alert("تکایە کۆد بنووسە");db.ref('patients/'+c).once('value').then((s)=>{if(s.exists()){let d=s.val();document.getElementById('r-name').innerText=d.name;document.getElementById('r-date').innerText=d.nextDate||"دیاری نەکراوە";document.getElementById('r-u').innerText=d.uWire||"-";document.getElementById('r-l').innerText=d.lWire||"-";document.getElementById('r-total').innerText=Number(d.total).toLocaleString()+" دینار";document.getElementById('r-rem').innerText=Number(d.remaining).toLocaleString()+" دینار";if(d.patientNotes){document.getElementById('r-notes').innerText=d.patientNotes;document.getElementById('r-notes-area').classList.remove('hidden')}else{document.getElementById('r-notes-area').classList.add('hidden')}document.getElementById('result').classList.remove('hidden')}else{alert("ئەم کۆدە بوونی نییە! دڵنیابەرەوە لە ڕاستی کۆدەکە.");document.getElementById('result').classList.add('hidden')}}).catch(err=>alert("کێشەیەک لە پەیوەندی ڕوویدا"))}
+
+        // داواکردنی مۆڵەتی نۆتفیکەیشن لە کاتی کردنەوەی سایتەکە
+        document.addEventListener("DOMContentLoaded", ()=>{
+            if(Notification.permission !== "granted" && Notification.permission !== "denied"){
+                Notification.requestPermission();
+            }
+            startClockCheck(); // دەستپێکردنی کاتژمێری ناوەکی
+        });
+
+        function checkStatus(){
+            let c=document.getElementById('p-code').value.trim().toUpperCase();
+            if(!c) return alert("تکایە کۆد بنووسە");
+            
+            db.ref('patients/'+c).once('value').then((s)=>{
+                if(s.exists()){
+                    let d=s.val();
+                    document.getElementById('r-name').innerText=d.name;
+                    document.getElementById('r-date').innerText=d.nextDate || "دیاری نەکراوە";
+                    document.getElementById('r-total').innerText=Number(d.total).toLocaleString()+" د.ع";
+                    document.getElementById('r-rem').innerText=Number(d.remaining).toLocaleString()+" د.ع";
+                    document.getElementById('r-notes').innerText=d.patientNotes || "تێبینی نییە.";
+                    
+                    let tbody=document.getElementById('history-table-body');
+                    tbody.innerHTML="";
+                    let h=d.historyRecords || [];
+                    if(h.length===0){
+                        tbody.innerHTML="<tr><td colspan='3'>هیچ قستێک تۆمار نەکراوە</td></tr>";
+                    }else{
+                        h.forEach((r,idx)=>{
+                            tbody.innerHTML+=`<tr><td>${idx+1}</td><td>${r.date}</td><td class="text-green">${Number(r.paid).toLocaleString()} د.ع</td></tr>`;
+                        });
+                    }
+                    document.getElementById('patient-data').classList.remove('hidden');
+                    
+                    // پاشەکەوتکردنی زانیاری موعید لە ناو مۆبایلەکە بۆ ئەوەی سەعات ١١ کار بکات
+                    localStorage.setItem('p_name', d.name);
+                    localStorage.setItem('p_date', d.nextDate || "");
+                    
+                    // نۆتفیکەیشنی خێرا بۆ تاقیکردنەوەی ئەوەی کە کار دەکات
+                    if(Notification.permission === "granted"){
+                        new Notification("نۆرینگەی دکتۆر ڕامان", {body: "کۆدەکەت بە سەرکەوتوویی داخل بوو. ئامادەبە بۆ وەرگرتنی ئاگادارکردنەوەکان."});
+                    }
+                }else{
+                    alert("ئەم کۆدە بوونی نییە!");
+                    document.getElementById('patient-data').classList.add('hidden');
+                }
+            }).catch(err=>alert("کێشەیەک لە پەیوەندی ڕوویدا"));
+        }
+
+        // سیستەمی پشکنینی کاتژمێر بۆ سەعات ١١:٠٠ی بەیانی
+        function startClockCheck() {
+            setInterval(() => {
+                let now = new Date();
+                // پشکنین ئەگەر کاتژمێر ڕێک ١١:٠٠ی بەیانی بێت
+                if (now.getHours() === 11 && now.getMinutes() === 0) {
+                    let savedName = localStorage.getItem('p_name');
+                    let savedDate = localStorage.getItem('p_date');
+                    let todayStr = now.toISOString().split('T')[0]; // ڕێککەوتی ئەمڕۆ وەک: 2026-05-16
+                    
+                    if (savedDate === todayStr && Notification.permission === "granted") {
+                        new Notification("ئاگادارکردنەوەی موعید 📅", {
+                            body: `کاک/خانمی ${savedName}، بیرخستنەوە! ئەمڕۆ کاتژمێر ١١ی بەیانی موعیدتان هەیە لە نۆرینگەی دکتۆر ڕامان شاسوار.`,
+                            icon: "https://cdn-icons-png.flaticon.com/512/3467/3467782.png"
+                        });
+                    }
+                }
+            }, 60000); // هەموو خولەکێک یەکجار پشکنین دەکات
+        }
     </script>
 </body>
 </html>
