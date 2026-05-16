@@ -7,7 +7,11 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
-        :root{--primary:#004060;--accent:#0076a3;--bg:#ebf2f7}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);padding:10px;text-align:right;direction:rtl}.box{max-width:520px;margin:10px auto;background:white;padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1);position:relative}h4{text-align:center;color:var(--primary);margin-bottom:15px}.form-group{margin-bottom:10px}label{display:block;font-weight:bold;margin-bottom:3px;font-size:13px}input,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px}.row{display:flex;gap:8px}.row .form-group{flex:1}.btn{background:var(--primary);color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:5px}.btn-sec{background:var(--accent);font-size:12px;padding:6px;border-radius:6px;color:white;border:none;cursor:pointer}.hidden{display:none!important}.search-box{background:#fffde7;padding:8px;border:1px dashed #fbc02d;border-radius:6px;margin-bottom:12px}table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}th,td{padding:6px;border:1px solid #ddd;text-align:center}th{background:#f8f9fa}.clickable-code{color:var(--accent);font-weight:bold;cursor:pointer;text-decoration:underline;display:inline-block;padding:2px 5px}.clickable-code:hover{background:#e0f2fe;border-radius:4px}.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:100}.modal-content{background:white;padding:15px;border-radius:12px;width:90%;max-width:400px}.hist-item{background:#f1f5f9;padding:6px;border-radius:4px;margin-top:5px;font-size:12px;display:flex;justify-content:space-between;align-items:center}.total-box{background:#e0f2fe;border:1px solid #bae6fd;font-weight:bold;color:#0369a1;padding:8px;margin-top:10px;border-radius:4px;text-align:center;font-size:13px}.btn-add-new{position:absolute;top:12px;left:12px;background:#2e7d32;color:white;border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}.pass-toggle-btn{text-align:center;margin-top:15px;font-size:12px;color:var(--accent);cursor:pointer;text-decoration:underline}.change-pass-box{background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:8px;margin-top:10px}.change-pass-box h5{text-align:center;color:#334155;margin-bottom:8px;font-size:13px}.change-pass-box input{margin-bottom:6px;font-size:12px;padding:6px}
+        :root{--primary:#004060;--accent:#0076a3;--bg:#ebf2f7}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);padding:10px;text-align:right;direction:rtl}.box{max-width:520px;margin:10px auto;background:white;padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1);position:relative}h4{text-align:center;color:var(--primary);margin-bottom:15px}.form-group{margin-bottom:10px}label{display:block;font-weight:bold;margin-bottom:3px;font-size:13px}input,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px}.row{display:flex;gap:8px}.row .form-group{flex:1}.btn{background:var(--primary);color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:5px}.btn-sec{background:var(--accent);font-size:12px;padding:6px;border-radius:6px;color:white;border:none;cursor:pointer}.hidden{display:none!important}..search-box{background:#fffde7;padding:8px;border:1px dashed #fbc02d;border-radius:6px;margin-bottom:12px}table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}th,td{padding:6px;border:1px solid #ddd;text-align:center}th{background:#f8f9fa}.clickable-code{color:var(--accent);font-weight:bold;cursor:pointer;text-decoration:underline;display:inline-block;padding:2px 5px}.clickable-code:hover{background:#e0f2fe;border-radius:4px}.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:100}.modal-content{background:white;padding:15px;border-radius:12px;width:90%;max-width:400px}.hist-item{background:#f1f5f9;padding:6px;border-radius:4px;margin-top:5px;font-size:12px;display:flex;justify-content:space-between;align-items:center}.total-box{background:#e0f2fe;border:1px solid #bae6fd;font-weight:bold;color:#0369a1;padding:8px;margin-top:10px;border-radius:4px;text-align:center;font-size:13px}.btn-add-new{position:absolute;top:12px;left:12px;background:#2e7d32;color:white;border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}.pass-toggle-btn{text-align:center;margin-top:15px;font-size:12px;color:var(--accent);cursor:pointer;text-decoration:underline}.change-pass-box h5{text-align:center;color:#334155;margin-bottom:8px;font-size:13px}.change-pass-box input{margin-bottom:6px;font-size:12px;padding:6px}
+        
+        /* 📥 ستایلی دوگمە نوێیەکە: تۆزی بچووکتر بە ڕەنگی شینی کاڵ */
+        .btn-backup { background: #0284c7; color: white; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 85%; margin: 10px auto 5px auto; display: flex; align-items: center; justify-content: center; font-size: 12.5px; box-shadow: 0 1px 4px rgba(2,132,199,0.2); }
+        .btn-backup:hover { background: #0369a1; }
     </style>
 </head>
 <body>
@@ -54,6 +58,8 @@
                 <div class="form-group"><label>تێبینی بۆ دکتۆر:</label><textarea id="p-notes" rows="2"></textarea></div>
                 <button type="submit" class="btn">پاشەکەوتکردن / حفظ</button>
                 <button type="button" id="status-btn" class="btn" style="background:#d32f2f;" onclick="toggleStatus()">کاری نەخۆش تەواو بوو</button>
+                
+                <button type="button" class="btn-backup" onclick="downloadAllPatientsData()">📥 (دابەزاندنی داتایی زانیاری هەموو نەخۆشەکان)</button>
             </form>
             <div id="res" style="background:#f4f9fc;padding:8px;border-radius:6px;margin-top:10px;border:1px solid #bce0fd;" class="hidden"></div>
             <table>
@@ -91,6 +97,44 @@
         function toggleStatus(){allPatients[curCode].status=allPatients[curCode].status==="active"?"completed":"active";db.ref('patients/'+curCode+'/status').set(allPatients[curCode].status)}
         document.getElementById('table-body').addEventListener('click',function(e){if(e.target.classList.contains('clickable-code')){e.stopPropagation();let t=e.target.innerText;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>{alert("کۆدەکە بە سەرکەوتوویی کۆپی کرا: "+t)}).catch(err=>fallbackCopy(t))}else{fallbackCopy(t)}}});
         function fallbackCopy(t){let i=document.createElement('input');i.value=t;i.style.position='fixed';document.body.appendChild(i);i.select();document.execCommand('copy');document.body.removeChild(i);alert("کۆدەکە بە سەرکەوتوویی کۆپی کرا: "+t)}
+
+        // 📥 فەرمانی نوێ بۆ داگرتنی هەموو داتاکان بە شێوازی Excel بێ تێکچوونی زمانەکە
+        function downloadAllPatientsData() {
+            db.ref('patients').once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    return alert("هیچ داتایەک نییە بۆ دابەزاندن!");
+                }
+
+                let data = snapshot.val();
+                let csvContent = "کۆد,ناو,کۆی گشتی پارە,پارەی ماوە,موعیدی داهاتوو,تێبینی بۆ نەخۆش,تێبینی دکتۆر,تەلی U,تەلی L,دۆخ\n";
+
+                for (let code in data) {
+                    let p = data[code];
+                    let name = p.name ? p.name.replace(/,/g, " ") : "بێ ناو";
+                    let total = p.total || 0;
+                    let remaining = p.remaining || 0;
+                    let nextDate = p.nextDate || "دیاری نەکراوە";
+                    let pNotes = p.patientNotes ? p.patientNotes.replace(/[\n\r,]/g, " ") : "تێبینی نییە";
+                    let dNotes = p.notes ? p.notes.replace(/[\n\r,]/g, " ") : "تێبینی نییە";
+                    let uWire = p.uWire || "-";
+                    let lWire = p.lWire || "-";
+                    let statusTxt = p.status === 'completed' ? 'تەواوبوو' : 'بەردەوامە';
+
+                    csvContent += `${code},${name},${total},${remaining},${nextDate},${pNotes},${dNotes},${uWire},${lWire},${statusTxt}\n`;
+                }
+
+                // ئەم کۆدە (\uFEFF) ڕێگری دەکات لە تێکەڵبوونی پیتە کوردی و عەرەبییەکان لە مۆبایلدا
+                let blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+                let link = document.createElement("a");
+                let todayStr = new Date().toISOString().split('T')[0];
+                
+                link.href = URL.createObjectURL(blob);
+                link.download = `داتای_گشتی_نەخۆشەکان_${todayStr}.csv`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch((err) => alert("کێشەیەک ڕوویدا لە کاتی داگرتنی فایلەکە: " + err.message));
+        }
     </script>
 </body>
 </html>
