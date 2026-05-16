@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - الطبيب</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <style>
+        :root{--primary:#004060;--accent:#0076a3;--bg:#ebf2f7}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);padding:10px;text-align:right;direction:rtl}.box{max-width:520px;margin:10px auto;background:white;padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1);position:relative}h4{text-align:center;color:var(--primary);margin-bottom:15px}.form-group{margin-bottom:10px}label{display:block;font-weight:bold;margin-bottom:3px;font-size:13px}input,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px}.row{display:flex;gap:8px}.row .form-group{flex:1}.btn{background:var(--primary);color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:5px}.btn-sec{background:var(--accent);font-size:12px;padding:6px;border-radius:6px;color:white;border:none;cursor:pointer}.hidden{display:none!important}.search-box{background:#fffde7;padding:8px;border:1px dashed #fbc02d;border-radius:6px;margin-bottom:12px}table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}th,td{padding:6px;border:1px solid #ddd;text-align:center}th{background:#f8f9fa}.clickable-code{color:var(--accent);font-weight:bold;cursor:pointer;text-decoration:underline;display:inline-block;padding:2px 5px}.clickable-code:hover{background:#e0f2fe;border-radius:4px}.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:100}.modal-content{background:white;padding:15px;border-radius:12px;width:90%;max-width:400px}.hist-item{background:#f1f5f9;padding:6px;border-radius:4px;margin-top:5px;font-size:12px;display:flex;justify-content:space-between;align-items:center}.total-box{background:#e0f2fe;border:1px solid #bae6fd;font-weight:bold;color:#0369a1;padding:8px;margin-top:10px;border-radius:4px;text-align:center;font-size:13px}.btn-add-new{position:absolute;top:12px;left:12px;background:#2e7d32;color:white;border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}.pass-toggle-btn{text-align:center;margin-top:15px;font-size:12px;color:var(--accent);cursor:pointer;text-decoration:underline}.change-pass-box{background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:8px;margin-top:10px}.change-pass-box h5{text-align:center;color:#334155;margin-bottom:8px;font-size:13px}.change-pass-box input{margin-bottom:6px;font-size:12px;padding:6px}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div id="auth">
+            <h4>پاسۆرد بنووسە / اكتب الرمز السري</h4>
+            <input type="password" id="pass" placeholder="Password..." style="text-align:center;margin-bottom:10px;">
+            <button class="btn" onclick="login()">چوونەژوورەوە</button>
+            <div class="pass-toggle-btn" onclick="togglePasswordSection()">⚙️ گۆڕینی پاسۆرد</div>
+            <div id="change-pass-section" class="change-pass-box hidden">
+                <h5>تعديل الرمز السري / گۆڕینی پاسۆرد</h5>
+                <input type="password" id="old-pass" placeholder="پاسۆردی کۆن">
+                <input type="password" id="new-pass" placeholder="پاسۆردی نوێ">
+                <input type="password" id="confirm-pass" placeholder="پاسۆردی نوێ (دووبارە)">
+                <button class="btn" onclick="changeAdminPassword()" style="background:#64748b;padding:6px;font-size:12px;">گۆڕین</button>
+            </div>
+        </div>
+        <div id="panel" class="hidden">
+            <button class="btn-add-new" onclick="resetForm()">＋</button>
+            <h4>پانێڵی دکتۆر ڕامان شاسوار</h4>
+            <div class="search-box">
+                <div style="display:flex;gap:5px;">
+                    <input type="text" id="s-input" placeholder="گەڕان بە ناو یان کۆد...">
+                    <button class="btn" onclick="search()" style="width:65px;margin:0;background:#fbc02d;color:#000;padding:5px;">گەڕان</button>
+                </div>
+            </div>
+            <form onsubmit="save(event)">
+                <div class="form-group"><label>ناوی نەخۆش / اسم المريض:</label><input type="text" id="p-name" required></div>
+                <div class="row">
+                    <div class="form-group"><label style="color:#d32f2f;">کۆی گشتی پارە:</label><input type="text" id="p-total" value="1,500,000" style="color:#d32f2f;font-weight:bold;" oninput="formatOnly(this)"></div>
+                    <div class="form-group"><label>قستی مانگانە / پارەی دراو:</label><input type="text" id="p-monthly" value="0" style="font-weight:bold;" oninput="formatOnly(this)"></div>
+                </div>
+                <div class="form-group" style="text-align:left;margin-top:5px;"><button type="button" class="btn-sec" style="background:#2e7d32;" onclick="openModal('payment')">💰 مێژووی پارەدان</button></div>
+                <div class="form-group"><label style="color:#0076a3;">تێبینی بۆ نەخۆش:</label><textarea id="p-patient-notes" rows="2"></textarea></div>
+                <div class="row">
+                    <div class="form-group"><label>تەلی U:</label><input type="text" id="u-w" placeholder="قەبارە..."></div>
+                    <div class="form-group"><label>تەلی L:</label><input type="text" id="l-w" placeholder="قەبارە..."></div>
+                </div>
+                <div class="form-group" style="text-align:left;margin-top:5px;margin-bottom:5px;"><button type="button" class="btn-sec" style="background:#0284c7;" onclick="openModal('wireHistory')">⚙️ مێژووی تەلەکان</button></div>
+                <div class="form-group">
+                    <label>موعیدی داهاتوو:</label>
+                    <div style="display:flex;gap:5px;"><input type="date" id="p-date" required><button type="button" class="btn-sec" onclick="openModal('history')">📅 مێژووی موعیدەکان</button></div>
+                </div>
+                <div class="form-group"><label>تێبینی بۆ دکتۆر:</label><textarea id="p-notes" rows="2"></textarea></div>
+                <button type="submit" class="btn">پاشەکەوتکردن / حفظ</button>
+                <button type="button" id="status-btn" class="btn" style="background:#d32f2f;" onclick="toggleStatus()">کاری نەخۆش تەواو بوو</button>
+            </form>
+            <div id="res" style="background:#f4f9fc;padding:8px;border-radius:6px;margin-top:10px;border:1px solid #bce0fd;" class="hidden"></div>
+            <table>
+                <thead><tr><th>#</th><th>کۆد (کلیک بکە بۆ کۆپی)</th><th>ناو</th><th>دۆخ</th><th>سڕینەوە</th></tr></thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="g-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="modal-title" style="margin-bottom:10px;font-size:16px;"></h3>
+            <div id="modal-list" style="max-height:220px;overflow-y:auto;margin-bottom:10px;"></div>
+            <div id="modal-total-summary" class="total-box hidden"></div>
+            <button class="btn" onclick="closeModal()" style="background:#64748b;margin-top:5px;">داخستن</button>
+        </div>
+    </div>
+    <script>
+        const firebaseConfig={apiKey:"AIzaSyDKNKQamBU8f0w8sBx6CdtPV73BoHb_2Tg",authDomain:"dr-raman.firebaseapp.com",projectId:"dr-raman",storageBucket:"dr-raman.firebasestorage.app",messagingSenderId:"853069919127",appId:"1:853069919127:web:2634aadee0b44c16678ad2",databaseURL:"https://dr-raman-default-rtdb.firebaseio.com"};
+        firebase.initializeApp(firebaseConfig);const db=firebase.database();let curCode="",allPatients={},currentSystemPassword="2026";
+        db.ref('systemSettings/adminPassword').on('value',(s)=>{if(s.exists())currentSystemPassword=s.val()});
+        function login(){let p=document.getElementById('pass').value.trim();if(p===currentSystemPassword){document.getElementById('auth').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');fetchAll()}else alert("پاسۆرد هەڵەیە / الرمز السري خطأ")}
+        function togglePasswordSection(){document.getElementById('change-pass-section').classList.toggle('hidden')}
+        function changeAdminPassword(){let o=document.getElementById('old-pass').value.trim(),n=document.getElementById('new-pass').value.trim(),c=document.getElementById('confirm-pass').value.trim();if(!o||!n||!c)return alert("تکایە هەموو خانەکان پڕبکەرەوە!");if(o!==currentSystemPassword)return alert("پاسۆردی کۆن ڕاست نییە!");if(n !== c)return alert("پاسۆردی نوێ لەگەڵ دووبارەکردنەوەکەی یەک ناگرێتەوە!");if(n.length<4)return alert("پاسۆردی نوێ نابێت لە ٤ پیت یان ژمارە کەمتر بێت!");db.ref('systemSettings/adminPassword').set(n).then(()=>{alert("پاسۆرد بە سەرکەوتوویی گۆڕدرا!");document.getElementById('old-pass').value="";document.getElementById('new-pass').value="";document.getElementById('confirm-pass').value="";document.getElementById('change-pass-section').classList.add('hidden')})}
+        function fetchAll(){db.ref('patients').on('value',(s)=>{allPatients=s.val()||{};refreshTable()})}
+        function formatOnly(i){let n=i.value.replace(/,/g,'');if(!isNaN(n)&&n!=="")i.value=Number(n).toLocaleString('en-US')}
+        function save(e){e.preventDefault();let name=document.getElementById('p-name').value.trim(),date=document.getElementById('p-date').value,today=new Date().toISOString().split('T')[0],t=Number(document.getElementById('p-total').value.replace(/,/g,''))||0,m=Number(document.getElementById('p-monthly').value.replace(/,/g,''))||0,uW=document.getElementById('u-w').value.trim(),lW=document.getElementById('l-w').value.trim(),code=curCode||"BW-"+Math.floor(1000+Math.random()*9000),hist=allPatients[code]?.historyRecords||[],wireHist=allPatients[code]?.wireHistoryRecords||[];if(m>=0||!curCode)hist.push({id:Date.now()+Math.random(),date:today,paid:m,nextAppointment:date});let cPaid=hist.reduce((acc,curr)=>acc+(Number(curr.paid)||0),0);if(!curCode||allPatients[code]?.uWire!==uW||allPatients[code]?.lWire!==lW){if(uW||lW)wireHist.push({id:Date.now()+Math.random(),date:today,uWire:uW||"-",lWire:lW||"-"})}let pData={name:name,total:t,monthly:m,remaining:(t-cPaid),uWire:uW,lWire:lW,visitDate:today,nextDate:date,notes:document.getElementById('p-notes').value,patientNotes:document.getElementById('p-patient-notes').value,status:allPatients[code]?.status||"active",historyRecords:hist,wireHistoryRecords:wireHist};db.ref('patients/'+code).set(pData).then(()=>{curCode=code;alert("پاشەکەوت کرا! کۆد: "+code)})}
+        function resetForm(){curCode="";document.getElementById('p-name').value="";document.getElementById('p-monthly').value="0";document.getElementById('p-notes').value="";document.getElementById('p-patient-notes').value="";document.getElementById('u-w').value="";document.getElementById('l-w').value="";document.getElementById('p-total').value="1,500,000";document.getElementById('p-date').value="";document.getElementById('res').classList.add('hidden')}
+        function search(){let q=document.getElementById('s-input').value.trim().toLowerCase(),f="";if(allPatients[q.toUpperCase()])f=q.toUpperCase();else{for(let c in allPatients){if(allPatients[c].name.toLowerCase().includes(q)){f=c;break}}}if(f){curCode=f;let d=allPatients[f];document.getElementById('p-name').value=d.name;document.getElementById('p-total').value=Number(d.total).toLocaleString('en-US');document.getElementById('p-monthly').value="0";document.getElementById('p-date').value=d.nextDate;document.getElementById('p-notes').value=d.notes||"";document.getElementById('p-patient-notes').value=d.patientNotes||"";document.getElementById('u-w').value=d.uWire||"";document.getElementById('l-w').value=d.lWire||"";document.getElementById('status-btn').innerText=d.status==='completed'?"بەردەوام بوون":"کاری نەخۆش تەواو بوو"}else alert("نەدۆزرایەوە!")}
+        function openModal(t){if(!curCode)return alert("سەرەتا سێرچ بکە!");let d=allPatients[curCode],list=document.getElementById('modal-list'),totalDiv=document.getElementById('modal-total-summary');list.innerHTML="";totalDiv.classList.add('hidden');if(t==='wireHistory'){document.getElementById('modal-title').innerText="⚙️ مێژووی گۆڕینی تەلەکان";let w=d.wireHistoryRecords||[];if(w.length===0)list.innerHTML="<p>تۆماری تەل نییە.</p>";else{w.forEach((r,idx)=>{list.innerHTML+=`<div class="hist-item"><div><b>${r.date} :</b> تەل U: ${r.uWire} | تەل L: ${r.lWire}</div><button style="color:red;background:none;border:none;" onclick="deleteWireRecord('${r.id||idx}')">🗑</button></div>`})}}else{let h=d.historyRecords||[];if(h.length===0)list.innerHTML="<p>تۆمار نییە.</p>";else{let sum=0;h.forEach((r,idx)=>{if(t==='history')list.innerHTML+=`<div class="hist-item"><b>${idx+1}:</b> رێککەوت: ${r.date} | موعید: ${r.nextAppointment||'-'}</div>`;else{sum+=(Number(r.paid)||0);list.innerHTML+=`<div class="hist-item"><div><b>${r.date} .</b> ${Number(r.paid).toLocaleString()} دینار</div><button style="color:red;background:none;border:none;" onclick="deletePaymentRecord('${r.id||idx}')">🗑</button></div>`}});if(t==='payment'){totalDiv.classList.remove('hidden');totalDiv.innerText=`تێکڕا: ${sum.toLocaleString()} دینار دراوە`}}document.getElementById('modal-title').innerText=t==='history'?"📅 مێژووی موعیدەکان":"💰 مێژووی پارەدان"}document.getElementById('g-modal').classList.remove('hidden')}
+        function deletePaymentRecord(rId){if(!confirm("بیسڕمەوە؟"))return;let d=allPatients[curCode];let idx=d.historyRecords.findIndex(r=>(r.id==rId||d.historyRecords.indexOf(r)==rId));if(idx!==-1){d.historyRecords.splice(idx,1);d.remaining=Number(d.total)-d.historyRecords.reduce((acc,curr)=>acc+(Number(curr.paid)||0),0);db.ref('patients/'+curCode).set(d).then(()=>{closeModal();alert("سڕایەوە")})}}
+        function deleteWireRecord(rId){if(!confirm("بیسڕمەوە؟"))return;let d=allPatients[curCode];let idx=d.wireHistoryRecords.findIndex(r=>(r.id==rId||d.wireHistoryRecords.indexOf(r)==rId));if(idx!==-1){d.wireHistoryRecords.splice(idx,1);db.ref('patients/'+curCode).set(d).then(()=>{closeModal();alert("سڕایەوە")})}}
+        function closeModal(){document.getElementById('g-modal').classList.add('hidden')}
+        function deletePatient(c){if(confirm("بیسڕمەوە؟")){db.ref('patients/'+c).remove().then(()=>resetForm())}}
+        function refreshTable(){let b=document.getElementById('table-body'),i=1;b.innerHTML="";for(let c in allPatients){let col=allPatients[c].status==='completed'?'#d32f2f':'#2e7d32',txt=allPatients[c].status==='completed'?'تەواوبوو':'بەردەوامە';b.innerHTML+=`<tr onclick="document.getElementById('s-input').value='${c}'; search();"><td>${i++}</td><td><span class="clickable-code">${c}</span></td><td>${allPatients[c].name}</td><td style="color:${col};font-weight:bold;">${txt}</td><td><button style="background:none;border:none;" onclick="event.stopPropagation(); deletePatient('${c}')">🗑</button></td></tr>`}}
+        function toggleStatus(){allPatients[curCode].status=allPatients[curCode].status==="active"?"completed":"active";db.ref('patients/'+curCode+'/status').set(allPatients[curCode].status)}
+        document.getElementById('table-body').addEventListener('click',function(e){if(e.target.classList.contains('clickable-code')){e.stopPropagation();let t=e.target.innerText;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>{alert("کۆدەکە بە سەرکەوتوویی کۆپی کرا: "+t)}).catch(err=>fallbackCopy(t))}else{fallbackCopy(t)}}});
+        function fallbackCopy(t){let i=document.createElement('input');i.value=t;i.style.position='fixed';document.body.appendChild(i);i.select();document.execCommand('copy');document.body.removeChild(i);alert("کۆدەکە بە سەرکەوتوویی کۆپی کرا: "+t)}
+    </script>
+</body>
+</html>
