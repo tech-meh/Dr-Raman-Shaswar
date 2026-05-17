@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl">
+<html lang="en-GB" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پەڕەی نەخۆش - عیادەی دکتۆر ڕامان شاسوار</title>
+    <title>Patient Page - Dr Raman Shaswar Clinic</title>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <link rel="icon" type="image/png" href="icon.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-        :root{--primary:#004060;--accent:#2e7d32;--bg:#ebf2f7}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);padding:10px;text-align:right;direction:rtl}.box{max-width:550px;margin:10px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}h3{text-align:center;color:var(--primary);font-size:16px;margin-bottom:5px}p.sub-t{text-align:center;font-size:12px;color:#666;margin-bottom:15px}.search-section{display:flex;gap:8px;background:#fffde7;padding:10px;border:1px dashed #fbc02d;border-radius:8px;margin-bottom:15px;align-items:center}input[type="text"]{flex:1;padding:10px;border:1px solid #ccc;border-radius:6px;text-align:center;font-weight:bold;font-size:14px}.btn-search{background:var(--accent);color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px}.sec-title{font-size:13px;font-weight:bold;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:3px;margin:15px 0 8px 0;display:flex;align-items:center;gap:5px}.form-group{margin-bottom:8px}label{display:block;font-size:12px;font-weight:bold;margin-bottom:3px;color:#334155}.row{display:flex;gap:10px}.row .form-group{flex:1}.val-box{background:#f8fafc;border:1px solid #e2e8f0;padding:8px;border-radius:6px;font-size:13px;min-height:36px;display:flex;align-items:center}table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}th,td{padding:8px;border:1px solid #e2e8f0;text-align:center}th{background:#f1f5f9;color:#334155;font-weight:bold}.text-red{color:#d32f2f;font-weight:bold}.text-green{color:#2e7d32;font-weight:bold}.footer-text{text-align:center;font-size:10px;color:#94a3b8;margin-top:20px}.hidden{display:none!important}
+        :root{--primary:#004060;--accent:#2e7d32;--bg:#ebf2f7}*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:var(--bg);padding:10px;text-align:left;direction:ltr}.box{max-width:550px;margin:10px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}h3{text-align:center;color:var(--primary);font-size:16px;margin-bottom:5px}p.sub-t{text-align:center;font-size:12px;color:#666;margin-bottom:15px}.search-section{display:flex;gap:8px;background:#fffde7;padding:10px;border:1px dashed #fbc02d;border-radius:8px;margin-bottom:15px;align-items:center}input[type="text"]{flex:1;padding:10px;border:1px solid #ccc;border-radius:6px;text-align:center;font-weight:bold;font-size:14px}.btn-search{background:var(--accent);color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px}.sec-title{font-size:13px;font-weight:bold;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:3px;margin:15px 0 8px 0;display:flex;align-items:center;gap:5px}.form-group{margin-bottom:8px}label{display:block;font-size:12px;font-weight:bold;margin-bottom:3px;color:#334155}.row{display:flex;gap:10px}.row .form-group{flex:1}.val-box{background:#f8fafc;border:1px solid #e2e8f0;padding:8px;border-radius:6px;font-size:13px;min-height:36px;display:flex;align-items:center}table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}th,td{padding:8px;border:1px solid #e2e8f0;text-align:center}th{background:#f1f5f9;color:#334155;font-weight:bold}.text-red{color:#d32f2f;font-weight:bold}.text-green{color:#2e7d32;font-weight:bold}.footer-text{text-align:center;font-size:10px;color:#94a3b8;margin-top:20px}.hidden{display:none!important}
     </style>
 </head>
 <body>
     <div class="box">
-        <h3>بەخێربێن بۆ نۆرینگەی دکتۆر ڕامان شاسوار</h3>
-        <p class="sub-t">تکایه کۆدەکەت بنووسه / يرجى كتابة الکود الخاص بك</p>
+        <h3>Welcome to Dr Raman Shaswar Clinic</h3>
+        <p class="sub-t">Please enter your patient code</p>
         <div class="search-section">
-            <button class="btn-search" onclick="checkStatus()">بینین</button>
-            <input type="text" id="p-code" placeholder="BW-1045">
+            <input type="text" id="p-code" placeholder="e.g. BW-1045">
+            <button class="btn-search" onclick="checkStatus()">View</button>
         </div>
         <div id="patient-data" class="hidden">
-            <div class="sec-title">👤 زانیارییە کەسییەکان</div>
-            <div class="form-group"><label>ناوی نەخۆش:</label><div class="val-box" id="r-name" style="font-weight:bold;"></div></div>
-            <div class="sec-title">💰 دۆخی دارایی</div>
+            <div class="sec-title">👤 Personal Information</div>
+            <div class="form-group"><label>Patient Name:</label><div class="val-box" id="r-name" style="font-weight:bold;"></div></div>
+            <div class="sec-title">💰 Financial Status</div>
             <div class="row">
-                <div class="form-group"><label class="text-red">کۆی گشتی پارە:</label><div class="val-box text-red" id="r-total"></div></div>
-                <div class="form-group"><label class="text-green">تێکڕای پارەی ماوە:</label><div class="val-box text-green" id="r-rem"></div></div>
+                <div class="form-group"><label class="text-red">Total Amount:</label><div class="val-box text-red" id="r-total"></div></div>
+                <div class="form-group"><label class="text-green">Remaining Balance:</label><div class="val-box text-green" id="r-rem"></div></div>
             </div>
-            <div class="sec-title">📅 موعید و ڕێنماییەکان</div>
-            <div class="form-group"><label>موعیدی داهاتوو:</label><div class="val-box" id="r-date" style="color:#0284c7;font-weight:bold;"></div></div>
-            <div class="form-group"><label>ڕێنمایی پزیشک بۆ تۆ:</label><div class="val-box" id="r-notes" style="white-space:pre-wrap;line-height:1.4;"></div></div>
-            <div class="sec-title">📊 مێژووی قستە دراوەکان</div>
+            <div class="sec-title">📅 Appointment & Instructions</div>
+            <div class="form-group"><label>Next Appointment:</label><div class="val-box" id="r-date" style="color:#0284c7;font-weight:bold;"></div></div>
+            <div class="form-group"><label>Doctor's Instructions for You:</label><div class="val-box" id="r-notes" style="white-space:pre-wrap;line-height:1.4;"></div></div>
+            <div class="sec-title">📊 Installment Payment History</div>
             <table>
-                <thead><tr><th style="width:10%">#</th><th style="width:45%">ڕێککەوت</th><th style="width:45%">بڕی قست</th></tr></thead>
+                <thead><tr><th style="width:10%">#</th><th style="width:45%">Date</th><th style="width:45%">Paid Amount</th></tr></thead>
                 <tbody id="history-table-body"></tbody>
             </table>
         </div>
@@ -42,72 +46,82 @@
         const firebaseConfig={apiKey:"AIzaSyDKNKQamBU8f0w8sBx6CdtPV73BoHb_2Tg",authDomain:"dr-raman.firebaseapp.com",projectId:"dr-raman",storageBucket:"dr-raman.firebasestorage.app",messagingSenderId:"853069919127",appId:"1:853069919127:web:2634aadee0b44c16678ad2",databaseURL:"https://dr-raman-default-rtdb.firebaseio.com"};
         firebase.initializeApp(firebaseConfig);const db=firebase.database();
 
-        // داواکردنی مۆڵەتی نۆتفیکەیشن لە کاتی کردنەوەی سایتەکە
+        // لێرەدا فەرمانی داواکردنی نۆتفیکەیشنەکە پارێزراو کراوە بۆ ئەوەی هیچ کێشەیەک یان ئیرۆرێک پیشان نەدات
         document.addEventListener("DOMContentLoaded", ()=>{
-            if(Notification.permission !== "granted" && Notification.permission !== "denied"){
-                Notification.requestPermission();
+            try {
+                if(window.Notification && Notification.permission !== "granted" && Notification.permission !== "denied"){
+                    Notification.requestPermission().catch(err => console.log("Notification status ignored safely."));
+                }
+            } catch(e) {
+                console.log("Notifications are not supported on this browser.");
             }
-            startClockCheck(); // دەستپێکردنی کاتژمێری ناوەکی
+            startClockCheck(); 
         });
 
         function checkStatus(){
             let c=document.getElementById('p-code').value.trim().toUpperCase();
-            if(!c) return alert("تکایە کۆد بنووسە");
+            if(!c) return alert("Please enter your code");
             
             db.ref('patients/'+c).once('value').then((s)=>{
                 if(s.exists()){
                     let d=s.val();
                     document.getElementById('r-name').innerText=d.name;
-                    document.getElementById('r-date').innerText=d.nextDate || "دیاری نەکراوە";
-                    document.getElementById('r-total').innerText=Number(d.total).toLocaleString()+" د.ع";
-                    document.getElementById('r-rem').innerText=Number(d.remaining).toLocaleString()+" د.ع";
-                    document.getElementById('r-notes').innerText=d.patientNotes || "تێبینی نییە.";
+                    document.getElementById('r-date').innerText=d.nextDate || "Not Scheduled";
+                    document.getElementById('r-total').innerText=Number(d.total).toLocaleString()+" IQD";
+                    document.getElementById('r-rem').innerText=Number(d.remaining).toLocaleString()+" IQD";
+                    document.getElementById('r-notes').innerText=d.patientNotes || "No instructions added yet.";
                     
                     let tbody=document.getElementById('history-table-body');
                     tbody.innerHTML="";
                     let h=d.historyRecords || [];
                     if(h.length===0){
-                        tbody.innerHTML="<tr><td colspan='3'>هیچ قستێک تۆمار نەکراوە</td></tr>";
+                        tbody.innerHTML="<tr><td colspan='3'>No installments recorded yet</td></tr>";
                     }else{
                         h.forEach((r,idx)=>{
-                            tbody.innerHTML+=`<tr><td>${idx+1}</td><td>${r.date}</td><td class="text-green">${Number(r.paid).toLocaleString()} د.ع</td></tr>`;
+                            tbody.innerHTML+=`<tr><td>${idx+1}</td><td>${r.date}</td><td class="text-green">${Number(r.paid).toLocaleString()} IQD</td></tr>`;
                         });
                     }
                     document.getElementById('patient-data').classList.remove('hidden');
                     
-                    // پاشەکەوتکردنی زانیاری موعید لە ناو مۆبایلەکە بۆ ئەوەی سەعات ١١ کار بکات
                     localStorage.setItem('p_name', d.name);
                     localStorage.setItem('p_date', d.nextDate || "");
                     
-                    // نۆتفیکەیشنی خێرا بۆ تاقیکردنەوەی ئەوەی کە کار دەکات
-                    if(Notification.permission === "granted"){
-                        new Notification("نۆرینگەی دکتۆر ڕامان", {body: "کۆدەکەت بە سەرکەوتوویی داخل بوو. ئامادەبە بۆ وەرگرتنی ئاگادارکردنەوەکان."});
+                    try {
+                        if(window.Notification && Notification.permission === "granted"){
+                            new Notification("Dr Raman Clinic", {body: "Your code has been entered successfully. Ready for appointment reminders."});
+                        }
+                    } catch(e) {
+                        console.log("Instant notification block ignored.");
                     }
                 }else{
-                    alert("ئەم کۆدە بوونی نییە!");
+                    alert("This code does not exist!");
                     document.getElementById('patient-data').classList.add('hidden');
                 }
-            }).catch(err=>alert("کێشەیەک لە پەیوەندی ڕوویدا"));
+            }).catch(err=>alert("A connection error occurred"));
         }
 
-        // سیستەمی پشکنینی کاتژمێر بۆ سەعات ١١:٠٠ی بەیانی
         function startClockCheck() {
             setInterval(() => {
                 let now = new Date();
-                // پشکنین ئەگەر کاتژمێر ڕێک ١١:٠٠ی بەیانی بێت
                 if (now.getHours() === 11 && now.getMinutes() === 0) {
                     let savedName = localStorage.getItem('p_name');
                     let savedDate = localStorage.getItem('p_date');
-                    let todayStr = now.toISOString().split('T')[0]; // ڕێککەوتی ئەمڕۆ وەک: 2026-05-16
+                    let todayStr = now.toISOString().split('T')[0];
                     
-                    if (savedDate === todayStr && Notification.permission === "granted") {
-                        new Notification("ئاگادارکردنەوەی موعید 📅", {
-                            body: `کاک/خانمی ${savedName}، بیرخستنەوە! ئەمڕۆ کاتژمێر ١١ی بەیانی موعیدتان هەیە لە نۆرینگەی دکتۆر ڕامان شاسوار.`,
-                            icon: "https://cdn-icons-png.flaticon.com/512/3467/3467782.png"
-                        });
+                    if (savedDate === todayStr) {
+                        try {
+                            if (window.Notification && Notification.permission === "granted") {
+                                new Notification("Appointment Reminder 📅", {
+                                    body: `Dear ${savedName}, this is a reminder that you have an appointment today at 11:00 AM at Dr Raman Shaswar Clinic.`,
+                                    icon: "https://cdn-icons-png.flaticon.com/512/3467/3467782.png"
+                                });
+                            }
+                        } catch(e) {
+                            console.log("Background notification block ignored.");
+                        }
                     }
                 }
-            }, 60000); // هەموو خولەکێک یەکجار پشکنین دەکات
+            }, 60000); 
         }
     </script>
 </body>
